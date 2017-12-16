@@ -68,8 +68,9 @@ public class LoginTest {
 
         draftsPage.waitForPageLoaded();
         softAssert.assertTrue(draftsPage.isDraftContainerVisible());
+        softAssert.assertEquals(draftsPage.getMail(0),recipient);
+        softAssert.assertEquals(draftsPage.getMessage(0),text);
         softAssert.assertAll();
-
     }
 
     @AfterMethod
