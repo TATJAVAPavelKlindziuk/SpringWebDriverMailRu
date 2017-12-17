@@ -10,8 +10,5 @@ public class MailConstants {
     public static final String RECIPIENT = "fennya@gmail.com";
     public static final String SUBJECT = "cdp practice";
     public static final String TEXT = "text for chapter 4";
-
-    private MailConstants() {
-    }
 }
 

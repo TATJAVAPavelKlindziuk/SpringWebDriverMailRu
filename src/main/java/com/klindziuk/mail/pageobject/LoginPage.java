@@ -1,7 +1,5 @@
 package com.klindziuk.mail.pageobject;
 
-
-import com.klindziuk.mail.blocks.Folder;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

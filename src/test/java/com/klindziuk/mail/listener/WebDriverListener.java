@@ -48,8 +48,8 @@ public class WebDriverListener extends AbstractTestNGSpringContextTests implemen
         if (method.isTestMethod()) {
             WebDriver driver = threadLocalWebDriver.getDriver();
             if (driver != null) {
+                driver.close();
                 driver.quit();
-                threadLocalWebDriver.killDriver();
                 LOGGER.info("Killing driver with hashcode: " + driver.hashCode());
             }
         }

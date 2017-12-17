@@ -11,7 +11,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class ThreadLocalWebDriver {
@@ -59,23 +58,5 @@ public class ThreadLocalWebDriver {
 
     public WebDriver getDriver() {
         return threadDriver.get();
-    }
-
-    public  void killDriver() {
-        try {
-            switch (browserName) {
-                case "chrome": {
-                    Runtime.getRuntime().exec("taskkill /f /IM chromedriver.exe");
-                }
-                case "firefox": {
-                    Runtime.getRuntime().exec("taskkill /f /IM geckodriver.exe");
-                }
-                case "ie": {
-                    Runtime.getRuntime().exec("taskkill /f /IM IEDriverServer.exe");
-                }
-            }
-        } catch (IOException ioex) {
-            ioex.printStackTrace();
-        }
     }
 }
