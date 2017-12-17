@@ -1,13 +1,21 @@
 package com.klindziuk.mail.pageobject;
 
+import com.klindziuk.mail.blocks.Folder;
+import com.klindziuk.mail.blocks.Header;
+import com.klindziuk.mail.constants.TimeConstants;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Created by Hp on 16/12/2017.
  */
 public class WriteMailPage extends BasePage {
+    private static final Logger LOGGER = Logger.getLogger(Folder.class);
+    private Header header;
+    private Folder folder;
 
     @FindBy(xpath = "//textarea[@data-original-name = 'To']")
     private WebElement recipientField;
@@ -24,11 +32,21 @@ public class WriteMailPage extends BasePage {
     @FindBy(xpath = "//div[@data-name = 'saveDraft']")
     private WebElement saveAsDraftButton;
 
-    @FindBy(xpath = "//a[@data-mnemo = 'drafts']")
-    private WebElement draftTile;
+    @FindBy(xpath = "//div[@data-name = 'send']")
+    private WebElement sendMailButton;
 
     public WriteMailPage(WebDriver webDriver) {
         super(webDriver);
+        header = PageFactory.initElements(webDriver, Header.class);
+        folder = PageFactory.initElements(webDriver, Folder.class);
+    }
+
+    public Header header() {
+        return header;
+    }
+
+    public Folder folder() {
+        return folder;
     }
 
     public boolean isRecipientFieldVisible() {
@@ -42,12 +60,15 @@ public class WriteMailPage extends BasePage {
     public void saveAsDraftMail(String recipient, String subject, String text) {
         writeMail(recipient, subject, text);
         saveAsDraftButton.click();
+        LOGGER.info("Save mail as draft");
+        pause(TimeConstants.SECONDS_3);
     }
 
-    public void writeMail(String recipient, String subject, String text) {
+    private void writeMail(String recipient, String subject, String text) {
+        LOGGER.info("Writing new mail...");
         recipientField.sendKeys(recipient);
         subjectField.sendKeys(subject);
-        //switch to inframe
+        // switch to inframe
         webDriver.switchTo().frame(textAreaIframe);
         textArea.click();
         textArea.clear();
@@ -56,12 +77,14 @@ public class WriteMailPage extends BasePage {
         webDriver.switchTo().defaultContent();
     }
 
-    public void openDraftTab(){
-        draftTile.click();
+    public void sentMail(){
+        sendMailButton.click();
+        LOGGER.info("Sending mail to recipient");
+        pause(TimeConstants.SECONDS_3);
     }
 
     public void waitForPageLoaded() {
-        waitForElementDisplayed(recipientField);
-        waitForElementDisplayed(subjectField);
+        waitForElementVisible(recipientField);
+        waitForElementVisible(subjectField);
     }
 }

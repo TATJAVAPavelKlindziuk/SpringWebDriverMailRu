@@ -1,5 +1,6 @@
 package com.klindziuk.mail.pageobject;
 
+import com.klindziuk.mail.constants.TimeConstants;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -14,33 +15,45 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class BasePage {
     protected WebDriver webDriver;
 
-     BasePage(WebDriver webDriver) {
+    BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
 
     public abstract void waitForPageLoaded();
 
-    protected void waitForElementDisplayed(WebElement webElement) {
+    protected void waitForElementVisible(WebElement webElement) {
         new WebDriverWait(webDriver, 15)
                 .until(ExpectedConditions.visibilityOf(webElement));
     }
 
     protected void waitUntilElementNotDisplayed(final WebElement webElement) {
-        WebDriverWait wait = new WebDriverWait(webDriver, 5);
+        WebDriverWait wait = new WebDriverWait(webDriver, TimeConstants.SECONDS_5);
         ExpectedCondition elementIsDisplayed = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver arg0) {
                 try {
                     webElement.isDisplayed();
                     return false;
-                }
-                catch (NoSuchElementException nfEx) {
-                    return true;
-                }
-                catch (StaleElementReferenceException serEx ) {
+                } catch (NoSuchElementException | StaleElementReferenceException ex) {
                     return true;
                 }
             }
         };
         wait.until(elementIsDisplayed);
+    }
+
+    protected boolean isElementVisible(WebElement webElement) {
+        try {
+            return webElement.isDisplayed() && webElement.isEnabled();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
+    protected void pause(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

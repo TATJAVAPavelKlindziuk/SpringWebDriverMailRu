@@ -1,19 +1,17 @@
 package com.klindziuk.mail.pageobject;
 
 
+import com.klindziuk.mail.blocks.Folder;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by Hp on 16/12/2017.
  */
 public class LoginPage extends BasePage {
+    private static final Logger LOGGER = Logger.getLogger(LoginPage.class);
 
     @FindBy(id = "mailbox:login")
     private WebElement loginField;
@@ -28,19 +26,20 @@ public class LoginPage extends BasePage {
         super(webDriver);
     }
 
-    public boolean isLoginFieldVisible(){
-        return loginField.isDisplayed();
+    public boolean isLoginFieldVisible() {
+        return isElementVisible(loginField);
     }
 
-    public boolean isPasswordFieldVisible(){
-        return loginField.isDisplayed();
+    public boolean isPasswordFieldVisible() {
+        return isElementVisible(passwordField);
     }
 
-    public boolean isSubmitButtonVisible(){
-        return loginField.isDisplayed();
+    public boolean isSubmitButtonVisible() {
+        return isElementVisible(submitButton);
     }
 
-    public void loginAs(String login, String password){
+    public void loginAs(String login, String password) {
+        LOGGER.info("Enter credentials: " + login + " / " + password);
         waitForPageLoaded();
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
@@ -49,8 +48,9 @@ public class LoginPage extends BasePage {
 
     @Override
     public void waitForPageLoaded() {
-        waitForElementDisplayed(loginField);
-        waitForElementDisplayed(passwordField);
-        waitForElementDisplayed(submitButton);
+        LOGGER.info("Wait for main page loaded...");
+        waitForElementVisible(loginField);
+        waitForElementVisible(passwordField);
+        waitForElementVisible(submitButton);
     }
 }
