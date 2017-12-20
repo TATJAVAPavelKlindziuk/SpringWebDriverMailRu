@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Hp on 16/12/2017.
  */
@@ -51,7 +53,7 @@ public abstract class BasePage {
 
     protected void pause(int time) {
         try {
-            Thread.sleep(time);
+            TimeUnit.SECONDS.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
