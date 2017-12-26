@@ -3,15 +3,13 @@ package com.klindziuk.mail.util;
 /**
  * Created by Hp on 17/12/2017.
  */
+import com.klindziuk.mail.constants.BrowserConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
-
-import java.util.Arrays;
 
 public class ThreadLocalWebDriver {
     static String browserName;
@@ -20,32 +18,27 @@ public class ThreadLocalWebDriver {
         @Override
         public WebDriver initialValue() {
             WebDriver driver = null;
-            if (browserName.toLowerCase().contains("chrome")) {
+            if (browserName.toLowerCase().contains(BrowserConstants.CHROME)) {
                 ChromeOptions ops = new ChromeOptions();
                 ops.addArguments("--disable-notifications");
-                ops.addArguments(Arrays.asList("disable-infobars"));
+                ops.addArguments("--disable-infobars");
                 System.setProperty("webdriver.chrome.driver", "D:/Java/Chrome/chromedriver.exe");
                 driver = new ChromeDriver();
                 return driver;
             }
-            if (browserName.toLowerCase().contains("firefox")) {
+            if (browserName.toLowerCase().contains(BrowserConstants.FIREFOX)) {
                 driver = new FirefoxDriver();
-                //TODO
+                // TODO Implement for firefox
                 return null;
             }
-            if (browserName.toLowerCase().contains("safari")) {
+            if (browserName.toLowerCase().contains(BrowserConstants.SAFARI)) {
                 driver = new SafariDriver();
-                //TODO
+                // TODO Implement for safari
                 return null;
             }
-            if (browserName.toLowerCase().contains("ie")) {
+            if (browserName.toLowerCase().contains(BrowserConstants.IE)) {
                 driver = new InternetExplorerDriver();
-                //TODO
-                return null;
-            }
-            if (browserName.toLowerCase().contains("opera")) {
-                driver = new OperaDriver();
-                //TODO
+                // TODO Implement for Internet explorer
                 return null;
             }
             return driver;

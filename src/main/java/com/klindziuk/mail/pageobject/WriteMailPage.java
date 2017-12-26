@@ -37,6 +37,7 @@ public class WriteMailPage extends BasePage {
 
     public WriteMailPage(WebDriver webDriver) {
         super(webDriver);
+        PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);
     }
@@ -64,6 +65,22 @@ public class WriteMailPage extends BasePage {
         pause(TimeConstants.SECONDS_3);
     }
 
+    public void sendMail(String recipient, String subject, String text) {
+        writeMail(recipient, subject, text);
+        pushSentMailButton();
+    }
+
+    public void pushSentMailButton() {
+        sendMailButton.click();
+        LOGGER.info("Sending mail to recipient");
+        pause(TimeConstants.SECONDS_3);
+    }
+
+    public void waitForPageLoaded() {
+        waitForElementVisible(recipientField);
+        waitForElementVisible(subjectField);
+    }
+
     private void writeMail(String recipient, String subject, String text) {
         LOGGER.info("Writing new mail...");
         recipientField.sendKeys(recipient);
@@ -75,16 +92,5 @@ public class WriteMailPage extends BasePage {
         textArea.sendKeys(text);
         // switch to default content
         webDriver.switchTo().defaultContent();
-    }
-
-    public void sentMail(){
-        sendMailButton.click();
-        LOGGER.info("Sending mail to recipient");
-        pause(TimeConstants.SECONDS_3);
-    }
-
-    public void waitForPageLoaded() {
-        waitForElementVisible(recipientField);
-        waitForElementVisible(subjectField);
     }
 }

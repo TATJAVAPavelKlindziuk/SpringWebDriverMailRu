@@ -3,13 +3,11 @@ package com.klindziuk.mail.test;
 import com.klindziuk.mail.pageobject.*;
 import com.klindziuk.mail.util.BrowserDriver;
 import com.klindziuk.mail.constants.MailConstants;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -31,11 +29,11 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
         WebDriver webDriver = BrowserDriver.getDriver();
         webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         webDriver.navigate().to(MailConstants.MAIL_URL);
-        loginPage = PageFactory.initElements(webDriver, LoginPage.class);
-        servicePage = PageFactory.initElements(webDriver, ServicePage.class);
-        writeMailPage = PageFactory.initElements(webDriver, WriteMailPage.class);
-        draftsPage = PageFactory.initElements(webDriver, DraftsPage.class);
-        sentPage = PageFactory.initElements(webDriver, SentPage.class);
+        loginPage = new LoginPage(webDriver);
+        servicePage = new ServicePage(webDriver);
+        writeMailPage = new WriteMailPage(webDriver);
+        draftsPage = new DraftsPage(webDriver);
+        sentPage = new SentPage(webDriver);
     }
 
     @Test
@@ -72,7 +70,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
         // Step 7 : Send the mail
         draftsPage.openMailFromDraft(firstElementIndex);
         checkWriteMailPage(softAssert);
-        writeMailPage.sentMail();
+        writeMailPage.pushSentMailButton();
 
         // Step 8 : Verify, that the mail disappeared from ‘Drafts’ folder.
         writeMailPage.folder().openDraftTab();

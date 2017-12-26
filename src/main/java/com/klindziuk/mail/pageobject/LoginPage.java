@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Created by Hp on 16/12/2017.
@@ -17,11 +18,12 @@ public class LoginPage extends BasePage {
     @FindBy(id = "mailbox:password")
     private WebElement passwordField;
 
-    @FindBy(id = "mailbox:submit")
+    @FindBy(css = "#mailbox\\3a submit > input")
     private WebElement submitButton;
 
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
+        PageFactory.initElements(this.webDriver, this);
     }
 
     public boolean isLoginFieldVisible() {

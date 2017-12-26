@@ -33,6 +33,7 @@ public class SentPage extends BasePage {
 
     public SentPage(WebDriver webDriver) {
         super(webDriver);
+        PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);
     }
