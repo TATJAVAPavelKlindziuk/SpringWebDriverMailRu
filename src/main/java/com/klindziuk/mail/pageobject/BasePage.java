@@ -1,6 +1,6 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.constants.TimeConstants;
+import com.klindziuk.mail.constant.TimeConstants;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;

@@ -1,8 +1,8 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.blocks.Folder;
-import com.klindziuk.mail.blocks.Header;
-import com.klindziuk.mail.constants.TimeConstants;
+import com.klindziuk.mail.block.Folder;
+import com.klindziuk.mail.block.Header;
+import com.klindziuk.mail.constant.TimeConstants;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -72,6 +72,7 @@ public class WriteMailPage extends BasePage {
 
     public void pushSentMailButton() {
         sendMailButton.click();
+        webDriver.switchTo().alert().dismiss();
         LOGGER.info("Sending mail to recipient");
         pause(TimeConstants.SECONDS_3);
     }
@@ -84,7 +85,11 @@ public class WriteMailPage extends BasePage {
     private void writeMail(String recipient, String subject, String text) {
         LOGGER.info("Writing new mail...");
         recipientField.sendKeys(recipient);
+        webDriver.switchTo().alert().dismiss();
+        pause(TimeConstants.SECONDS_5);
+
         subjectField.sendKeys(subject);
+        pause(TimeConstants.SECONDS_2);
         // switch to inframe
         webDriver.switchTo().frame(textAreaIframe);
         textArea.click();

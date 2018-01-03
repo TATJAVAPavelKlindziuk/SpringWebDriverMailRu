@@ -3,7 +3,7 @@ package com.klindziuk.mail.util;
 /**
  * Created by Hp on 17/12/2017.
  */
-import com.klindziuk.mail.constants.BrowserConstants;
+import com.klindziuk.mail.constant.BrowserConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -22,7 +22,7 @@ public class ThreadLocalWebDriver {
                 ChromeOptions ops = new ChromeOptions();
                 ops.addArguments("--disable-notifications");
                 ops.addArguments("--disable-infobars");
-                System.setProperty("webdriver.chrome.driver", "D:/Java/Chrome/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "/Users/pavel_klindziuk/Downloads/chromedriver");
                 driver = new ChromeDriver();
                 return driver;
             }

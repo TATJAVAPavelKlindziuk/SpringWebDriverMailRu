@@ -1,5 +1,6 @@
 package com.klindziuk.mail.pageobject;
 
+import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +19,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "mailbox:password")
     private WebElement passwordField;
 
-    @FindBy(css = "#mailbox\\3a submit > input")
+    @FindBy(id = "mailbox:submit")
     private WebElement submitButton;
 
     public LoginPage(WebDriver webDriver) {
@@ -44,6 +45,15 @@ public class LoginPage extends BasePage {
         loginField.sendKeys(login);
         passwordField.sendKeys(password);
         submitButton.click();
+    }
+
+    public String getPageUrl(){
+        scrollDownABit();
+       return JavaScriptUtil.getPageUrl(webDriver);
+    }
+
+    public void scrollDownABit(){
+         JavaScriptUtil.scrollDownPage(webDriver,0,10);
     }
 
     @Override

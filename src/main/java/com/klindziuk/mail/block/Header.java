@@ -1,4 +1,4 @@
-package com.klindziuk.mail.blocks;
+package com.klindziuk.mail.block;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

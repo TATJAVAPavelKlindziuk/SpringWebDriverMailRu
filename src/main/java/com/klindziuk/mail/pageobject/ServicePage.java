@@ -1,7 +1,7 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.blocks.Folder;
-import com.klindziuk.mail.blocks.Header;
+import com.klindziuk.mail.block.Folder;
+import com.klindziuk.mail.block.Header;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +21,7 @@ public class ServicePage extends BasePage {
 
     public ServicePage(WebDriver webDriver) {
         super(webDriver);
+        PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);
     }
