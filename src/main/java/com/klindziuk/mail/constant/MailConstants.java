@@ -1,4 +1,4 @@
-package com.klindziuk.mail.constants;
+package com.klindziuk.mail.constant;
 
 /**
  * Created by Hp on 17/12/2017.

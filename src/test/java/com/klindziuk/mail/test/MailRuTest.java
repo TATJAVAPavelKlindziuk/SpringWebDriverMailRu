@@ -2,9 +2,8 @@ package com.klindziuk.mail.test;
 
 import com.klindziuk.mail.pageobject.*;
 import com.klindziuk.mail.util.BrowserDriver;
-import com.klindziuk.mail.constants.MailConstants;
+import com.klindziuk.mail.constant.MailConstants;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -46,7 +45,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
         loginPage.loginAs(MailConstants.LOGIN, MailConstants.PASSWORD);
 
         // Step 2 : Verify that the login is successful
-        servicePage.waitForPageLoaded();
+    //    servicePage.waitForPageLoaded();
         softAssert.assertTrue(servicePage.isServicePageOpened(), "Service Page is not opened");
 
         // Step 3-4 : Create a new mail (fill addressee, subject and body fields),save the mail as a draft

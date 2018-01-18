@@ -3,7 +3,7 @@ package com.klindziuk.mail.util;
 /**
  * Created by Hp on 17/12/2017.
  */
-import com.klindziuk.mail.constants.BrowserConstants;
+import com.klindziuk.mail.constant.BrowserConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
