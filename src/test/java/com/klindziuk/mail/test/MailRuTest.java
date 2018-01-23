@@ -65,7 +65,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 
 		// Step 6 : Verify the draft content (addressee, subject and body – should be the same as in Step 3)
 		softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstants.NO_RECIPIENT,
-				String.format("Email '%s' should be equal to '%s'", draftsPage.getMail(firstElementIndex),
+				String.format("Email '%s ' should be equal to '%s'", draftsPage.getMail(firstElementIndex),
 						MailConstants.NO_RECIPIENT));
 		softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), MailConstants.TEXT,
 				String.format("Text '%s' should be equal to '%s'", draftsPage.getMessage(firstElementIndex),
