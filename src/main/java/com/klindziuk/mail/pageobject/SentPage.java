@@ -9,7 +9,8 @@ import com.klindziuk.mail.constant.TimeConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.htmlelements.annotations.Name;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 import java.util.List;
 
@@ -19,31 +20,29 @@ import java.util.List;
 public class SentPage extends BasePage {
     private static final String CONTAINER_PATH = "//div[@class ='b-datalist__body']";
 
-    private Header header;
-    private Folder folder;
-
+    @Name("Checkbox")
     @FindBy(xpath = CONTAINER_PATH + "//div[@class = 'js-item-checkbox b-datalist__item__cbx']")
     private WebElement checkBox;
 
+    @Name("Mails")
     @FindBy(xpath = CONTAINER_PATH + "//div[@class ='b-datalist__item__addr']")
     private List<WebElement> mails;
 
+    @Name("Messages")
     @FindBy(xpath = CONTAINER_PATH + "//span[@class ='b-datalist__item__subj__snippet']")
     private List<WebElement> messages;
 
     public SentPage(WebDriver webDriver) {
         super(webDriver);
-        PageFactory.initElements(this.webDriver, this);
-        header = PageFactory.initElements(webDriver, Header.class);
-        folder = PageFactory.initElements(webDriver, Folder.class);
+        HtmlElementLoader.populatePageObject(this,webDriver);
     }
 
     public Header header() {
-        return header;
+        return new Header(webDriver);
     }
 
     public Folder folder() {
-        return folder;
+        return new Folder(webDriver);
     }
 
     public boolean isPageContainsMail(String message) {

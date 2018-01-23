@@ -6,32 +6,30 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.htmlelements.annotations.Name;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 /**
  * Created by Hp on 16/12/2017.
  */
 public class ServicePage extends BasePage {
     private static final Logger LOGGER = Logger.getLogger(ServicePage.class);
-    private Header header;
-    private Folder folder;
 
+    @Name("Write mail button")
     @FindBy(xpath = "//div[@class= 'b-toolbar__item']//a[@data-name = 'compose']")
     private WebElement writeMailButton;
 
     public ServicePage(WebDriver webDriver) {
         super(webDriver);
-        PageFactory.initElements(this.webDriver, this);
-        header = PageFactory.initElements(webDriver, Header.class);
-        folder = PageFactory.initElements(webDriver, Folder.class);
+        HtmlElementLoader.populatePageObject(this,webDriver);
     }
 
     public Header header() {
-        return header;
+        return new Header(webDriver);
     }
 
     public Folder folder() {
-        return folder;
+        return new Folder(webDriver);
     }
 
     public void openNewMail()

@@ -6,7 +6,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.htmlelements.annotations.Name;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 import java.util.List;
 
@@ -14,34 +15,33 @@ import java.util.List;
  * Created by Hp on 16/12/2017.
  */
 public class DraftsPage extends BasePage {
+
     private static final Logger LOGGER = Logger.getLogger(DraftsPage.class);
     private static final String CONTAINER_PATH = "//div[@class ='b-datalist b-datalist_letters b-datalist_letters_to']";
 
-    private Header header;
-    private Folder folder;
-
+    @Name("Draft Container")
     @FindBy(xpath = CONTAINER_PATH + "//div[@class = 'b-datalist__item__info']")
     private WebElement draftContainer;
 
+    @Name("Mails")
     @FindBy(xpath = CONTAINER_PATH + "//div[@class = 'b-datalist__item__addr']")
     private List<WebElement> mails;
 
+    @Name("Messages")
     @FindBy(xpath = CONTAINER_PATH + "//span[@class = 'b-datalist__item__subj__snippet']")
     private List<WebElement> messages;
 
     public DraftsPage(WebDriver webDriver) {
         super(webDriver);
-        PageFactory.initElements(this.webDriver, this);
-        header = PageFactory.initElements(webDriver, Header.class);
-        folder = PageFactory.initElements(webDriver, Folder.class);
+        HtmlElementLoader.populatePageObject(this,webDriver);
     }
 
     public Header header() {
-        return header;
+        return new Header(webDriver);
     }
 
     public Folder folder() {
-        return folder;
+        return new Folder(webDriver);
     }
 
     public boolean isDraftContainerVisible() {

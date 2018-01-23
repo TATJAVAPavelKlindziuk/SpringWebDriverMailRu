@@ -1,14 +1,19 @@
 package com.klindziuk.mail.test;
 
-import com.klindziuk.mail.pageobject.*;
+import com.klindziuk.mail.model.User;
+import com.klindziuk.mail.pageobject.LoginPage;
+import com.klindziuk.mail.pageobject.SentPage;
+import com.klindziuk.mail.pageobject.ServicePage;
+import com.klindziuk.mail.pageobject.DraftsPage;
+import com.klindziuk.mail.pageobject.WriteMailPage;
 import com.klindziuk.mail.util.BrowserDriver;
 import com.klindziuk.mail.constant.MailConstants;
-import com.klindziuk.mail.util.JavaScriptUtil;
+import com.klindziuk.mail.util.DataProviderManager;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -24,6 +29,12 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 	private WriteMailPage writeMailPage;
 	private DraftsPage draftsPage;
 	private SentPage sentPage;
+	private User user;
+
+	@Factory(dataProvider = "userDataProvider", dataProviderClass = DataProviderManager.class)
+	public MailRuTest(User user) {
+		this.user = user;
+	}
 
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
@@ -43,11 +54,8 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 		SoftAssert softAssert = new SoftAssert();
 
 		// Step 1 : Login to the mail box
-		Assert.assertEquals(loginPage.getPageUrl(), MailConstants.MAIL_URL,
-				String.format("Url '%s' should be equal to '%s'", MailConstants.MAIL_URL, loginPage.getPageUrl()));
-
 		checkLoginPage(softAssert);
-		loginPage.loginAs(MailConstants.LOGIN, MailConstants.PASSWORD);
+		loginPage.loginAs(user.getLogin(),user.getPassword());
 
 		// Step 2 : Verify that the login is successful
 		servicePage.waitForPageLoaded();

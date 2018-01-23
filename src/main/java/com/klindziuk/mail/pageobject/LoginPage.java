@@ -5,7 +5,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.htmlelements.annotations.Name;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 /**
  * Created by Hp on 16/12/2017.
@@ -13,18 +14,15 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage extends BasePage {
     private static final Logger LOGGER = Logger.getLogger(LoginPage.class);
 
-    @FindBy(id = "mailbox:login")
-    private WebElement loginField;
+    @Name("Login field") @FindBy(id = "mailbox:login") private WebElement loginField;
 
-    @FindBy(id = "mailbox:password")
-    private WebElement passwordField;
+    @Name("Password field") @FindBy(id = "mailbox:password") private WebElement passwordField;
 
-    @FindBy(id = "mailbox:submit")
-    private WebElement submitButton;
+    @Name("Submit button") @FindBy(id = "mailbox:submit") private WebElement submitButton;
 
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
-        PageFactory.initElements(this.webDriver, this);
+        HtmlElementLoader.populatePageObject(this, webDriver);
     }
 
     public boolean isLoginFieldVisible() {
@@ -47,13 +45,8 @@ public class LoginPage extends BasePage {
         submitButton.click();
     }
 
-    public String getPageUrl(){
-        scrollDownABit();
-       return JavaScriptUtil.getPageUrl(webDriver);
-    }
-
-    public void scrollDownABit(){
-         JavaScriptUtil.scrollDownPage(webDriver,0,10);
+    private void scrollDownABit() {
+        JavaScriptUtil.scrollDownPage(webDriver, 0, 10);
     }
 
     @Override
