@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+/**
+ * Created by Hp on 16/12/2017.
+ */
 public final class ActionUtil {
 
 	private ActionUtil() {}

@@ -1,6 +1,5 @@
 package com.klindziuk.mail.block;
 
-import com.klindziuk.mail.util.ActionUtil;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

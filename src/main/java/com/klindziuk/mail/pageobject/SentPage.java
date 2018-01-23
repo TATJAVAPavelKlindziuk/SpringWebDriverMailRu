@@ -1,8 +1,5 @@
 package com.klindziuk.mail.pageobject;
 
-/**
- * Created by Hp on 16/12/2017.
- */
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
 import com.klindziuk.mail.constant.TimeConstants;
