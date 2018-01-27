@@ -11,11 +11,12 @@ import java.util.List;
  * Created by Hp on 18/01/2018.
  */
 public class AnnoElement extends By {
+
+    private static final String REPLACE_TOKEN = "?";
+
     private By locator;
     private SearchBy elementSearchCriteria;
     private String elementValue;
-
-    private static final String REPLACE_TOKEN = "?";
 
     public AnnoElement(final SearchBy elementSearchCriteria, final String elementValue) {
 
@@ -27,7 +28,21 @@ public class AnnoElement extends By {
         this.elementValue = elementValue;
     }
 
-    public final void initElement(final SearchBy elementSearchCriteria, final String elementValue) {
+    public AnnoElement updateElement(final String... values) {
+        initElement(elementSearchCriteria, replaceWithValues(elementValue, REPLACE_TOKEN, values));
+        return this;
+    }
+
+    public By getLocator() {
+        return locator;
+    }
+
+    @Override
+    public List<WebElement> findElements(final SearchContext searchContext) {
+        return null;
+    }
+
+    private void initElement(final SearchBy elementSearchCriteria, final String elementValue) {
 
         switch (elementSearchCriteria) {
             case ID:
@@ -55,20 +70,6 @@ public class AnnoElement extends By {
                 locator = By.partialLinkText(elementValue);
                 break;
         }
-    }
-
-    public AnnoElement updateElement(final String... values) {
-        initElement(elementSearchCriteria, replaceWithValues(elementValue, REPLACE_TOKEN, values));
-        return this;
-    }
-
-    public By getLocator() {
-        return locator;
-    }
-
-    @Override
-    public List<WebElement> findElements(final SearchContext searchContext) {
-        return null;
     }
 
     private String replaceWithValues(final String target, final String replaceToken, final String... values) {

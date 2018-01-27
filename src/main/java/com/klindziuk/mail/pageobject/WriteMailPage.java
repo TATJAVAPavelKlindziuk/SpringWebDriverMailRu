@@ -9,11 +9,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static com.klindziuk.mail.util.TimeUtil.pause;
+
 /**
  * Created by Hp on 16/12/2017.
  */
 public class WriteMailPage extends BasePage {
+
     private static final Logger LOGGER = Logger.getLogger(Folder.class);
+
     private Header header;
     private Folder folder;
 

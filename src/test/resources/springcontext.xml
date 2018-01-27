@@ -5,7 +5,7 @@
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
     <context:component-scan base-package="com.klindziuk.mail.listener" />
     <!--<bean id="driver" class="org.openqa.selenium.chrome.ChromeDriver" /> -->
-    <bean id="threadLocalWebDriver" class="com.klindziuk.mail.util.ThreadLocalWebDriver" >
+    <bean id="threadLocalWebDriver" class="com.klindziuk.mail.util.driver.ThreadLocalWebDriver" >
         <constructor-arg type = "java.lang.String" value = "chrome"/>
     </bean>
 </beans>

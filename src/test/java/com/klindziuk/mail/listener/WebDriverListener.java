@@ -13,8 +13,8 @@ import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
 
-import com.klindziuk.mail.util.BrowserDriver;
-import com.klindziuk.mail.util.ThreadLocalWebDriver;
+import com.klindziuk.mail.util.driver.BrowserDriver;
+import com.klindziuk.mail.util.driver.ThreadLocalWebDriver;
 
 @ContextConfiguration(locations = {"file:src/test/resources/springcontext.xml"})
 public class WebDriverListener extends AbstractTestNGSpringContextTests implements IInvokedMethodListener {

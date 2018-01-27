@@ -11,12 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.swing.text.html.HTML;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Hp on 16/12/2017.
@@ -29,7 +27,7 @@ public abstract class BasePage {
         initElements();
     }
 
-    public abstract void waitForPageLoaded();
+    protected abstract void waitForPageLoaded();
 
     protected void waitForElementVisible(WebElement webElement) {
         new WebDriverWait(webDriver, 15)
@@ -59,15 +57,23 @@ public abstract class BasePage {
         }
     }
 
-    protected void pause(int time) {
-        try {
-            TimeUnit.SECONDS.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    protected AnnoElement updateElement(final AnnoElement element, final String... values) {
+        return element.updateElement(values);
     }
 
-    public final void initElements() {
+    protected WebElement findElement(final AnnoElement element) {
+        return webDriver.findElement(element.getLocator());
+    }
+
+    protected void click(final AnnoElement element) {
+        findElement(element).click();
+    }
+
+    protected String getText(final AnnoElement element) {
+        return findElement(element).getText();
+    }
+
+    private void initElements() {
 
         final List<Field> fields = new ArrayList<>();
         Class currentPageObject = this.getClass();
@@ -91,21 +97,5 @@ public abstract class BasePage {
                 }
             }
         }
-    }
-
-    public AnnoElement updateElement(final AnnoElement element, final String... values) {
-        return element.updateElement(values);
-    }
-
-    public WebElement findElement(final AnnoElement element) {
-        return webDriver.findElement(element.getLocator());
-    }
-
-    public void click(final AnnoElement element) {
-        findElement(element).click();
-    }
-
-    public String getText(final AnnoElement element) {
-        return findElement(element).getText();
     }
 }

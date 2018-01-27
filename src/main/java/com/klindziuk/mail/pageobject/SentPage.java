@@ -1,8 +1,5 @@
 package com.klindziuk.mail.pageobject;
 
-/**
- * Created by Hp on 16/12/2017.
- */
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
 import com.klindziuk.mail.constant.TimeConstants;
@@ -12,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
+
+import static com.klindziuk.mail.util.TimeUtil.pause;
 
 /**
  * Created by Hp on 16/12/2017.

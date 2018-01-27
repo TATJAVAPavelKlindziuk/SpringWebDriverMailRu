@@ -1,4 +1,4 @@
-package com.klindziuk.mail.util;
+package com.klindziuk.mail.util.driver;
 
 /**
  * Created by Hp on 17/12/2017.

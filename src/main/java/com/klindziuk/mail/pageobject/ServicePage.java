@@ -1,6 +1,5 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.annotation.Anno;
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
 import org.apache.log4j.Logger;
@@ -13,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
  * Created by Hp on 16/12/2017.
  */
 public class ServicePage extends BasePage {
+
     private static final Logger LOGGER = Logger.getLogger(ServicePage.class);
     private Header header;
     private Folder folder;
