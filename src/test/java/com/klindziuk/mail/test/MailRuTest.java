@@ -1,11 +1,14 @@
 package com.klindziuk.mail.test;
 
+import com.klindziuk.mail.constant.PageTitleConstants;
 import com.klindziuk.mail.pageobject.*;
+import com.klindziuk.mail.title.PageTitle;
 import com.klindziuk.mail.util.driver.BrowserDriver;
 import com.klindziuk.mail.constant.MailConstants;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -42,19 +45,27 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 
         // Step 1 : Login to the mail box
         checkLoginPage(softAssert);
+        String loginPageTitle = new PageTitle(loginPage).getPageTitle();
+        Assert.assertEquals(loginPageTitle, PageTitleConstants.LOGIN_PAGE, "Titles are no equal");
         loginPage.loginAs(MailConstants.LOGIN, MailConstants.PASSWORD);
 
         // Step 2 : Verify that the login is successful
+        String servicePageTitle = new PageTitle(servicePage).getPageTitle();
+        Assert.assertEquals(servicePageTitle, PageTitleConstants.SERVICE_PAGE, "Titles are no equal");
         softAssert.assertTrue(servicePage.isServicePageOpened(), "Service Page is not opened");
 
         // Step 3-4 : Create a new mail (fill addressee, subject and body fields),save the mail as a draft
         servicePage.openNewMail();
         checkWriteMailPage(softAssert);
+        String writePageTitle = new PageTitle(writeMailPage).getPageTitle();
+        Assert.assertEquals(writePageTitle, PageTitleConstants.WRITE_MAIL_PAGE, "Titles are no equal");
         writeMailPage.saveAsDraftMail(MailConstants.RECIPIENT, MailConstants.SUBJECT, MailConstants.TEXT);
 
         // Step 5 : Verify, that the mail presents in ‘Drafts’ folder.
         writeMailPage.folder().openDraftTab();
         draftsPage.waitForPageLoaded();
+        String draftsPageTitle = new PageTitle(sentPage).getPageTitle();
+        Assert.assertEquals(draftsPageTitle, PageTitleConstants.DRAFTS_PAGE, "Titles are no equal");
         softAssert.assertTrue(draftsPage.isDraftContainerVisible());
 
         // Step 6 : Verify the draft content (addressee, subject and body – should be the same as in Step 3)
@@ -78,6 +89,8 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 
         // Step 9 : Verify, that the mail is in ‘Sent’ folder.
         writeMailPage.folder().openSentTab();
+        String sentPageTitle = new PageTitle(sentPage).getPageTitle();
+        Assert.assertEquals(sentPageTitle, PageTitleConstants.LOGIN_PAGE, "Titles are no equal");
         softAssert.assertTrue(sentPage.isPageContainsMail(MailConstants.TEXT), "Mail is not present in sent tab");
 
         // Step 10 : Log off

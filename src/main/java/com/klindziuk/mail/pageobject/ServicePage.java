@@ -1,7 +1,8 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.block.Folder;
-import com.klindziuk.mail.block.Header;
+import com.klindziuk.mail.pageobject.block.Folder;
+import com.klindziuk.mail.pageobject.block.Header;
+import com.klindziuk.mail.title.TitleFinder;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by Hp on 16/12/2017.
  */
-public class ServicePage extends BasePage {
+public class ServicePage extends BasePage implements TitleFinder {
 
     private static final Logger LOGGER = Logger.getLogger(ServicePage.class);
     private Header header;
@@ -47,5 +48,11 @@ public class ServicePage extends BasePage {
     @Override
     public void waitForPageLoaded() {
         waitForElementVisible(writeMailButton);
+    }
+
+    @Override
+    public String getTitle() {
+        // MOCK
+        return "Service Page";
     }
 }

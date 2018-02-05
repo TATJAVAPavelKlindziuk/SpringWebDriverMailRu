@@ -1,8 +1,9 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.block.Folder;
-import com.klindziuk.mail.block.Header;
+import com.klindziuk.mail.pageobject.block.Folder;
+import com.klindziuk.mail.pageobject.block.Header;
 import com.klindziuk.mail.constant.TimeConstants;
+import com.klindziuk.mail.title.TitleFinder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +16,7 @@ import static com.klindziuk.mail.util.TimeUtil.pause;
 /**
  * Created by Hp on 16/12/2017.
  */
-public class SentPage extends BasePage {
+public class SentPage extends BasePage implements TitleFinder {
     private static final String CONTAINER_PATH = "//div[@class ='b-datalist__body']";
 
     private Header header;
@@ -58,5 +59,11 @@ public class SentPage extends BasePage {
     @Override
     public void waitForPageLoaded() {
         waitForElementVisible(messages.get(0));
+    }
+
+    @Override
+    public String getTitle() {
+        // MOCK
+        return "Sent Page";
     }
 }

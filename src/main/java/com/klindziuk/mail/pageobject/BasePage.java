@@ -3,6 +3,7 @@ package com.klindziuk.mail.pageobject;
 import com.klindziuk.mail.annotation.Anno;
 import com.klindziuk.mail.constant.TimeConstants;
 import com.klindziuk.mail.element.AnnoElement;
+import com.klindziuk.mail.title.TitleFinder;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by Hp on 16/12/2017.
  */
-public abstract class BasePage {
+public abstract class BasePage implements TitleFinder {
     protected WebDriver webDriver;
 
     BasePage(WebDriver webDriver) {

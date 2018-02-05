@@ -3,7 +3,11 @@ package com.klindziuk.mail.constant;
 /**
  * Created by Hp on 17/12/2017.
  */
-public class MailConstants {
+public final class MailConstants {
+
+    private MailConstants() {
+    }
+
     public static final String MAIL_URL = "https://mail.ru/";
     public static final String LOGIN = "cdptraining";
     public static final String PASSWORD = "1practice1";

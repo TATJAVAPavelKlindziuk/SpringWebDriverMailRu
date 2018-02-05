@@ -2,6 +2,7 @@ package com.klindziuk.mail.pageobject;
 
 import com.klindziuk.mail.annotation.Anno;
 import com.klindziuk.mail.element.AnnoElement;
+import com.klindziuk.mail.title.TitleFinder;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +14,7 @@ import static com.klindziuk.mail.enumeration.SearchBy.ID;
 /**
  * Created by Hp on 16/12/2017.
  */
-public class LoginPage extends BasePage {
+public class LoginPage extends BasePage implements TitleFinder {
     private static final Logger LOGGER = Logger.getLogger(LoginPage.class);
 
     @FindBy(id = "mailbox:login")
@@ -56,5 +57,11 @@ public class LoginPage extends BasePage {
         waitForElementVisible(loginField);
         waitForElementVisible(findElement(passwordField));
         waitForElementVisible(findElement(submitButton));
+    }
+
+    @Override
+    public String getTitle() {
+        // MOCK
+        return "Login Page";
     }
 }

@@ -1,8 +1,9 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.block.Folder;
-import com.klindziuk.mail.block.Header;
+import com.klindziuk.mail.pageobject.block.Folder;
+import com.klindziuk.mail.pageobject.block.Header;
 import com.klindziuk.mail.constant.TimeConstants;
+import com.klindziuk.mail.title.TitleFinder;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ import static com.klindziuk.mail.util.TimeUtil.pause;
 /**
  * Created by Hp on 16/12/2017.
  */
-public class WriteMailPage extends BasePage {
+public class WriteMailPage extends BasePage implements TitleFinder {
 
     private static final Logger LOGGER = Logger.getLogger(Folder.class);
 
@@ -96,5 +97,11 @@ public class WriteMailPage extends BasePage {
         textArea.sendKeys(text);
         // switch to default content
         webDriver.switchTo().defaultContent();
+    }
+
+    @Override
+    public String getTitle() {
+        // MOCK
+        return "Write Mail page";
     }
 }
