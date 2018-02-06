@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" >
+<suite name="BDD Test Suite" verbose="1" parallel="tests" thread-count="1" configfailurepolicy="continue">
     <listeners>
         <listener class-name="com.klindziuk.mail.listener.WebDriverListener"></listener>
     </listeners>
-    <test name="com.klindziuk.mail.test.MailRuTest">
+    <test name="Login and Update Profile Test" annotations="JDK" preserve-order="true">
         <classes>
-            <class name="com.klindziuk.mail.test.MailRuTest" />
+            <class name="com.klindziuk.mail.test.cucumber.TestRunner"/>
         </classes>
     </test>
 </suite>

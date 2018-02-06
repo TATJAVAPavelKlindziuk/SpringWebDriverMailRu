@@ -14,14 +14,18 @@ Feature: Sent Mail
     When I login with "<login>" and "<password>"
     Then I am on the Service page
 
-  Examples:
-  | login          | password     |
-  | cdptraining    | 1practice1   |
+    Examples:
+      | login       | password   |
+      | cdptraining | 1practice1 |
 
-  Scenario: Mail creation
-    When I create mail with "fennya@gmail.com" and "cdp practice" and "text for chapter 4"
+  Scenario Outline: Mail creation
+    When I create mail with "<addressee>" and "<subject>" and "<text>"
     And Open drafts tab
-    Then Content should be "text for chapter 4" and addressee should be "<Не указано>"
+    Then Content should be "<text>" and addressee should be "<Не указано>"
+
+    Examples:
+      | addressee        | subject      | text               |
+      | fennya@gmail.com | cdp practice | text for chapter 4 |
 
   Scenario: Sent mail
     When I open mail from draft page
