@@ -1,6 +1,5 @@
 package com.klindziuk.mail.test.cucumber.stepdefs;
 
-import com.klindziuk.mail.constant.MailConstants;
 import com.klindziuk.mail.pageobject.DraftsPage;
 import com.klindziuk.mail.pageobject.LoginPage;
 import com.klindziuk.mail.pageobject.SentPage;
@@ -46,57 +45,57 @@ public class StepDefinitions extends AbstractTestNGSpringContextTests {
 
     // Background: Scenario is started
     @Given("^Scenario is started$")
-    public void scenario_started() throws Throwable {
+    public void scenario_started() {
         LOGGER.info("New Scenario is started");
     }
 
     // Scenario: User navigates to mail service home page
     @Given("^I am on the \"([^\"]*)\"$")
-    public void i_am_on_the(String arg1) throws Throwable {
-        webDriver.navigate().to(arg1);
+    public void i_am_on_the(String url) {
+        webDriver.navigate().to(url);
     }
 
     @Then("^I should see login form$")
-    public void i_should_see_login_form() throws Throwable {
+    public void i_should_see_login_form() {
         checkLoginPage(softAssert);
     }
 
     // Scenario Outline: Successful login
     @When("^I login with \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void i_login_with(String arg1, String arg2) throws Throwable {
-        loginPage.loginAs(arg1, arg2);
+    public void i_login_with(String login, String password) {
+        loginPage.loginAs(login, password);
     }
 
     @Then("^I am on the Service page$")
-    public void i_am_on_the_service_page() throws Throwable {
+    public void i_am_on_the_service_page() {
         servicePage.waitForPageLoaded();
         softAssert.assertTrue(servicePage.isServicePageOpened(), "Service Page is not opened");
     }
 
     // Scenario Outline: Mail creation
     @Given("^I create mail with \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void i_create_mail_with(String arg1, String arg2, String arg3) throws Throwable {
+    public void i_create_mail_with(String addressee, String subject, String text) {
         servicePage.openNewMail();
         checkWriteMailPage(softAssert);
-        writeMailPage.saveAsDraftMail(arg1, arg2, arg3);
+        writeMailPage.saveAsDraftMail(addressee, subject, text);
     }
 
     @And("^Open drafts tab$")
-    public void open_drafts_tab() throws Throwable {
+    public void open_drafts_tab() {
         writeMailPage.folder().openDraftTab();
         draftsPage.waitForPageLoaded();
         softAssert.assertTrue(draftsPage.isDraftContainerVisible());
     }
 
     @Then("^Content should be \"([^\"]*)\" and addressee should be \"([^\"]*)\"$$")
-    public void content_should_be_and_addressee_should_be(String arg1, String arg2) throws Throwable {
+    public void content_should_be_and_addressee_should_be(String text, String addressee) {
 
-        softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstants.NO_RECIPIENT,
+        softAssert.assertEquals(draftsPage.getMail(firstElementIndex), addressee,
                 String.format("Email '%s' should be equal to '%s'", draftsPage.getMail(firstElementIndex),
-                        MailConstants.NO_RECIPIENT));
-        softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), MailConstants.TEXT,
+                        addressee));
+        softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), text,
                 String.format("Text '%s' should be equal to '%s'", draftsPage.getMessage(firstElementIndex),
-                        MailConstants.TEXT));
+                        text));
     }
 
     // Scenario: Sent mail
@@ -143,5 +142,6 @@ public class StepDefinitions extends AbstractTestNGSpringContextTests {
         writeMailPage.waitForPageLoaded();
         softAssert.assertTrue(writeMailPage.isRecipientFieldVisible(), "Recipient field is not visible");
         softAssert.assertTrue(writeMailPage.isSubjectFieldVisible(), "Subject field is not visible");
+        softAssert.assertAll();
     }
 }
