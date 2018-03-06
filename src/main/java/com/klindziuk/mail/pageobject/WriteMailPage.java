@@ -2,7 +2,7 @@ package com.klindziuk.mail.pageobject;
 
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
-import com.klindziuk.mail.constant.TimeConstants;
+import com.klindziuk.mail.constant.TimeConstant;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -62,7 +62,7 @@ public class WriteMailPage extends BasePage {
         writeMail(recipient, subject, text);
         saveAsDraftButton.click();
         LOGGER.info("Save mail as draft");
-        pause(TimeConstants.SECONDS_3);
+        pause(TimeConstant.SECONDS_3);
     }
 
     public void sendMail(String recipient, String subject, String text) {
@@ -74,7 +74,7 @@ public class WriteMailPage extends BasePage {
         sendMailButton.click();
         webDriver.switchTo().alert().dismiss();
         LOGGER.info("Sending mail to recipient");
-        pause(TimeConstants.SECONDS_3);
+        pause(TimeConstant.SECONDS_3);
     }
 
     public void waitForPageLoaded() {
@@ -86,10 +86,10 @@ public class WriteMailPage extends BasePage {
         LOGGER.info("Writing new mail...");
         recipientField.sendKeys(recipient);
         webDriver.switchTo().alert().dismiss();
-        pause(TimeConstants.SECONDS_5);
+        pause(TimeConstant.SECONDS_5);
 
         subjectField.sendKeys(subject);
-        pause(TimeConstants.SECONDS_2);
+        pause(TimeConstant.SECONDS_2);
         // switch to inframe
         webDriver.switchTo().frame(textAreaIframe);
         textArea.click();

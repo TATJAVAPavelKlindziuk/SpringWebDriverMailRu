@@ -1,6 +1,6 @@
 package com.klindziuk.mail.pageobject;
 
-import com.klindziuk.mail.constant.TimeConstants;
+import com.klindziuk.mail.constant.TimeConstant;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -29,7 +29,7 @@ public abstract class BasePage {
     }
 
     protected void waitUntilElementNotDisplayed(final WebElement webElement) {
-        WebDriverWait wait = new WebDriverWait(webDriver, TimeConstants.SECONDS_5);
+        WebDriverWait wait = new WebDriverWait(webDriver, TimeConstant.SECONDS_5);
         ExpectedCondition elementIsDisplayed = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver arg0) {
                 try {

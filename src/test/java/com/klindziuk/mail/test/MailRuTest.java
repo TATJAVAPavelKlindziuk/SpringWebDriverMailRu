@@ -1,9 +1,13 @@
 package com.klindziuk.mail.test;
 
-import com.klindziuk.mail.pageobject.*;
+import com.klindziuk.mail.annotation.EnableWebDriver;
+import com.klindziuk.mail.pageobject.LoginPage;
+import com.klindziuk.mail.pageobject.ServicePage;
+import com.klindziuk.mail.pageobject.WriteMailPage;
+import com.klindziuk.mail.pageobject.DraftsPage;
+import com.klindziuk.mail.pageobject.SentPage;
 import com.klindziuk.mail.util.BrowserDriver;
-import com.klindziuk.mail.constant.MailConstants;
-import com.klindziuk.mail.util.JavaScriptUtil;
+import com.klindziuk.mail.constant.MailConstant;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -25,11 +29,13 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 	private DraftsPage draftsPage;
 	private SentPage sentPage;
 
+
 	@BeforeClass(alwaysRun = true)
+	@EnableWebDriver
 	public void setUp() {
 		WebDriver webDriver = BrowserDriver.getDriver();
 		webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		webDriver.navigate().to(MailConstants.MAIL_URL);
+		webDriver.navigate().to(MailConstant.MAIL_URL);
 		loginPage = new LoginPage(webDriver);
 		servicePage = new ServicePage(webDriver);
 		writeMailPage = new WriteMailPage(webDriver);
@@ -43,11 +49,11 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 		SoftAssert softAssert = new SoftAssert();
 
 		// Step 1 : Login to the mail box
-		Assert.assertEquals(loginPage.getPageUrl(), MailConstants.MAIL_URL,
-				String.format("Url '%s' should be equal to '%s'", MailConstants.MAIL_URL, loginPage.getPageUrl()));
+		Assert.assertEquals(loginPage.getPageUrl(), MailConstant.MAIL_URL,
+				String.format("Url '%s' should be equal to '%s'", MailConstant.MAIL_URL, loginPage.getPageUrl()));
 
 		checkLoginPage(softAssert);
-		loginPage.loginAs(MailConstants.LOGIN, MailConstants.PASSWORD);
+		loginPage.loginAs(MailConstant.LOGIN, MailConstant.PASSWORD);
 
 		// Step 2 : Verify that the login is successful
 		servicePage.waitForPageLoaded();
@@ -56,7 +62,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 		// Step 3-4 : Create a new mail (fill addressee, subject and body fields),save the mail as a draft
 		servicePage.openNewMail();
 		checkWriteMailPage(softAssert);
-		writeMailPage.saveAsDraftMail(MailConstants.RECIPIENT, MailConstants.SUBJECT, MailConstants.TEXT);
+		writeMailPage.saveAsDraftMail(MailConstant.RECIPIENT, MailConstant.SUBJECT, MailConstant.TEXT);
 
 		// Step 5 : Verify, that the mail presents in ‘Drafts’ folder.
 		writeMailPage.folder().openDraftTab();
@@ -64,12 +70,12 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 		softAssert.assertTrue(draftsPage.isDraftContainerVisible());
 
 		// Step 6 : Verify the draft content (addressee, subject and body – should be the same as in Step 3)
-		softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstants.NO_RECIPIENT,
+		softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstant.NO_RECIPIENT,
 				String.format("Email '%s ' should be equal to '%s'", draftsPage.getMail(firstElementIndex),
-						MailConstants.NO_RECIPIENT));
-		softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), MailConstants.TEXT,
+						MailConstant.NO_RECIPIENT));
+		softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), MailConstant.TEXT,
 				String.format("Text '%s' should be equal to '%s'", draftsPage.getMessage(firstElementIndex),
-						MailConstants.TEXT));
+						MailConstant.TEXT));
 
 		// Step 7 : Try Send the mail
 		draftsPage.openMailFromDraft(firstElementIndex);
@@ -87,7 +93,9 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 
 		// Step 10 : Verify that log off is successful
 		checkLoginPage(softAssert);
+		Assert.assertFalse(true);
 		softAssert.assertAll();
+
 	}
 
 	private void checkLoginPage(SoftAssert softAssert) {

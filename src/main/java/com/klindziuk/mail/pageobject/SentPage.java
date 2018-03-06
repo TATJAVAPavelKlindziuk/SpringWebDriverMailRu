@@ -5,7 +5,7 @@ package com.klindziuk.mail.pageobject;
  */
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
-import com.klindziuk.mail.constant.TimeConstants;
+import com.klindziuk.mail.constant.TimeConstant;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,7 +47,7 @@ public class SentPage extends BasePage {
     }
 
     public boolean isPageContainsMail(String message) {
-        pause(TimeConstants.SECONDS_3);
+        pause(TimeConstant.SECONDS_3);
         for (WebElement webElement : messages) {
             if (webElement.getText().contains(message) || webElement.getText().equals(message)) {
                 return true;

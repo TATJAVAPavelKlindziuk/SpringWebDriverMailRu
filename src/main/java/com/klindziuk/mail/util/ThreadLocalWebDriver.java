@@ -3,7 +3,7 @@ package com.klindziuk.mail.util;
 /**
  * Created by Hp on 17/12/2017.
  */
-import com.klindziuk.mail.constant.BrowserConstants;
+import com.klindziuk.mail.constant.BrowserConstant;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -18,7 +18,7 @@ public class ThreadLocalWebDriver {
         @Override
         public WebDriver initialValue() {
             WebDriver driver = null;
-            if (browserName.toLowerCase().contains(BrowserConstants.CHROME)) {
+            if (browserName.toLowerCase().contains(BrowserConstant.CHROME)) {
                 ChromeOptions ops = new ChromeOptions();
                 ops.addArguments("--disable-notifications");
                 ops.addArguments("--disable-infobars");
@@ -26,17 +26,17 @@ public class ThreadLocalWebDriver {
                 driver = new ChromeDriver();
                 return driver;
             }
-            if (browserName.toLowerCase().contains(BrowserConstants.FIREFOX)) {
+            if (browserName.toLowerCase().contains(BrowserConstant.FIREFOX)) {
                 driver = new FirefoxDriver();
                 // TODO Implement for firefox
                 return null;
             }
-            if (browserName.toLowerCase().contains(BrowserConstants.SAFARI)) {
+            if (browserName.toLowerCase().contains(BrowserConstant.SAFARI)) {
                 driver = new SafariDriver();
                 // TODO Implement for safari
                 return null;
             }
-            if (browserName.toLowerCase().contains(BrowserConstants.IE)) {
+            if (browserName.toLowerCase().contains(BrowserConstant.IE)) {
                 driver = new InternetExplorerDriver();
                 // TODO Implement for Internet explorer
                 return null;
