@@ -3,6 +3,7 @@
 <suite name="Mail suite">
     <listeners>
         <listener class-name="com.klindziuk.mail.listener.WebDriverListener"/>
+        <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
     </listeners>
     <test name="com.klindziuk.mail.test.MailRuTest">
         <classes>
