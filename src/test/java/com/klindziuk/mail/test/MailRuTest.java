@@ -44,7 +44,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 	}
 
 	@Test
-	public void checkLogin() {
+	public void checkMailTest() {
 		final int firstElementIndex = 0;
 		SoftAssert softAssert = new SoftAssert();
 
