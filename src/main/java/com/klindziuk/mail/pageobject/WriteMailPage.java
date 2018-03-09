@@ -3,8 +3,9 @@ package com.klindziuk.mail.pageobject;
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
 import com.klindziuk.mail.constant.TimeConstant;
+import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -35,8 +36,7 @@ public class WriteMailPage extends BasePage {
     @FindBy(xpath = "//div[@data-name = 'send']")
     private WebElement sendMailButton;
 
-    public WriteMailPage(WebDriver webDriver) {
-        super(webDriver);
+    public WriteMailPage() {
         PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);
@@ -66,13 +66,15 @@ public class WriteMailPage extends BasePage {
     }
 
     public void sendMail(String recipient, String subject, String text) {
+        LOGGER.info(String.format("Sending mail to '%s'", recipient));
         writeMail(recipient, subject, text);
         pushSentMailButton();
     }
 
     public void pushSentMailButton() {
+        JavaScriptUtil.highlightElement(sendMailButton);
         sendMailButton.click();
-        webDriver.switchTo().alert().dismiss();
+        handleAlert();
         LOGGER.info("Sending mail to recipient");
         pause(TimeConstant.SECONDS_3);
     }
@@ -84,18 +86,38 @@ public class WriteMailPage extends BasePage {
 
     private void writeMail(String recipient, String subject, String text) {
         LOGGER.info("Writing new mail...");
+        JavaScriptUtil.highlightElement(recipientField);
         recipientField.sendKeys(recipient);
-        webDriver.switchTo().alert().dismiss();
-        pause(TimeConstant.SECONDS_5);
 
+        handleAlert();
+        pause(TimeConstant.SECONDS_2);
+
+        JavaScriptUtil.highlightElement(subjectField);
         subjectField.sendKeys(subject);
         pause(TimeConstant.SECONDS_2);
-        // switch to inframe
+
+        setTextToFrame(text);
+        JavaScriptUtil.unHighlightElements(subjectField, recipientField);
+    }
+
+    private void handleAlert() {
+        LOGGER.warn("Trying to handle alert...");
+        try {
+            webDriver.switchTo().alert().dismiss();
+        } catch (NoAlertPresentException noAex) {
+            LOGGER.info("Alert missed, use normal flow");
+        }
+    }
+
+    private void setTextToFrame(String text) {
+        LOGGER.info("Switching to Iframe");
         webDriver.switchTo().frame(textAreaIframe);
+        JavaScriptUtil.highlightElement(textArea);
         textArea.click();
         textArea.clear();
         textArea.sendKeys(text);
-        // switch to default content
+        LOGGER.info("Switching from Iframe");
+        JavaScriptUtil.unHighlightElements(textArea);
         webDriver.switchTo().defaultContent();
     }
 }

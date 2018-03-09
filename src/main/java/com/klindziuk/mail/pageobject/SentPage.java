@@ -6,7 +6,6 @@ package com.klindziuk.mail.pageobject;
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
 import com.klindziuk.mail.constant.TimeConstant;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -31,8 +30,7 @@ public class SentPage extends BasePage {
     @FindBy(xpath = CONTAINER_PATH + "//span[@class ='b-datalist__item__subj__snippet']")
     private List<WebElement> messages;
 
-    public SentPage(WebDriver webDriver) {
-        super(webDriver);
+    public SentPage() {
         PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);

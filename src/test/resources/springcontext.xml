@@ -7,5 +7,7 @@
     <!--<bean id="driver" class="org.openqa.selenium.chrome.ChromeDriver" /> -->
     <bean id="threadLocalWebDriver" class="com.klindziuk.mail.util.ThreadLocalWebDriver" >
         <constructor-arg type = "java.lang.String" value = "chrome"/>
+        <constructor-arg type = "java.lang.String" value = "webdriver.chrome.driver"/>
+        <constructor-arg type = "java.lang.String" value = "/Users/pavel_klindziuk/Downloads/chromedriver"/>
     </bean>
 </beans>

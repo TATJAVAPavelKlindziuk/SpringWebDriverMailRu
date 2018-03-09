@@ -19,13 +19,10 @@ import org.testng.ITestResult;
 
 import com.klindziuk.mail.util.BrowserDriver;
 import com.klindziuk.mail.util.ThreadLocalWebDriver;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
 import java.util.Calendar;
 
 @ContextConfiguration(locations = {"file:src/test/resources/springcontext.xml"})
@@ -49,37 +46,28 @@ public class WebDriverListener extends AbstractTestNGSpringContextTests implemen
             LOGGER.error("Error during prepare springTestContext", e);
         }
 
-        if (checkAnnotation(method)) {
-            WebDriver driver = threadLocalWebDriver.getDriver();
-            LOGGER.info("Initializing driver with hashcode: " + driver.hashCode());
+        if (checkEnableWebDriverAnno(method)) {
+            WebDriver webDriver = threadLocalWebDriver.getDriver();
+            LOGGER.info("Initializing driver with hashcode: " + webDriver.hashCode());
             LOGGER.info("Thread id = " + Thread.currentThread().getId());
-            BrowserDriver.setWebDriver(driver);
+            BrowserDriver.setWebDriver(webDriver);
         }
     }
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         if (method.isTestMethod()) {
-            WebDriver driver = threadLocalWebDriver.getDriver();
-            if (testResult.getStatus() == ITestResult.FAILURE) {
-                File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                try {
-                    FileUtils.copyFile(scrFile, new File(
-                            "/Users/pavel_klindziuk/IdeaProjects/SpringWebDriverMailRu/src/test/resources/screenshot/"
-                                    + testResult.getName() + "()-" + Calendar.getInstance().getTime() + ".jpg"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (driver != null) {
-                driver.close();
-                driver.quit();
-                LOGGER.info("Killing driver with hashcode: " + driver.hashCode());
+            WebDriver webDriver = threadLocalWebDriver.getDriver();
+            takeScreenshotOnFailure(testResult, webDriver);
+            if (webDriver != null) {
+                webDriver.close();
+                webDriver.quit();
+                LOGGER.info("Killing driver with hashcode: " + webDriver.hashCode());
             }
         }
     }
 
-    private boolean checkAnnotation(IInvokedMethod method){
+    private boolean checkEnableWebDriverAnno(IInvokedMethod method){
         Annotation[] methodAnnotations = method.getTestMethod().getConstructorOrMethod().getMethod().getDeclaredAnnotations();
 
         for (Annotation annotation : methodAnnotations) {
@@ -88,5 +76,20 @@ public class WebDriverListener extends AbstractTestNGSpringContextTests implemen
             }
         }
         return false;
+    }
+
+    private void takeScreenshotOnFailure(ITestResult testResult, WebDriver webDriver) {
+        if (testResult.getStatus() == ITestResult.FAILURE) {
+            File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+            try {
+                String pathName =
+                        "./target/screenshots/" + testResult.getName() + "()-" + Calendar.getInstance().getTime()
+                                + ".jpg";
+                FileUtils.copyFile(scrFile, new File(pathName));
+                LOGGER.info("Take screenshot to : " + pathName);
+            } catch (IOException ioEx) {
+                LOGGER.error("Cannot take screenshot", ioEx);
+            }
+        }
     }
 }

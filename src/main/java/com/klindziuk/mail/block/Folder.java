@@ -1,6 +1,7 @@
 package com.klindziuk.mail.block;
 
 import com.klindziuk.mail.util.ActionUtil;
+import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +26,8 @@ public class Folder {
 
     public void openDraftTab() {
         LOGGER.info("Opening Draft tab...");
-        ActionUtil.moveCursorToElement(draftFolder,webDriver);
+        JavaScriptUtil.highlightElement(draftFolder);
+        ActionUtil.moveCursorToElement(draftFolder);
     }
 
     public void openSentTab()

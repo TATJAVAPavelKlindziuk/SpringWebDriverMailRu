@@ -1,6 +1,8 @@
 package com.klindziuk.mail.pageobject;
 
 import com.klindziuk.mail.constant.TimeConstant;
+import com.klindziuk.mail.util.BrowserDriver;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -15,10 +17,11 @@ import java.util.concurrent.TimeUnit;
  * Created by Hp on 16/12/2017.
  */
 public abstract class BasePage {
+    private static final Logger LOGGER = Logger.getLogger(BasePage.class);
     protected WebDriver webDriver;
 
-    BasePage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+    BasePage() {
+        this.webDriver = BrowserDriver.getDriver();
     }
 
     public abstract void waitForPageLoaded();
@@ -53,6 +56,7 @@ public abstract class BasePage {
 
     protected void pause(int time) {
         try {
+            LOGGER.warn(String.format("Pause for '%d' seconds", time));
             TimeUnit.SECONDS.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();

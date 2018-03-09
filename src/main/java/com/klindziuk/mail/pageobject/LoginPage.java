@@ -2,7 +2,6 @@ package com.klindziuk.mail.pageobject;
 
 import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -22,8 +21,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "mailbox:submit")
     private WebElement submitButton;
 
-    public LoginPage(WebDriver webDriver) {
-        super(webDriver);
+    public LoginPage() {
         PageFactory.initElements(this.webDriver, this);
     }
 
@@ -41,24 +39,28 @@ public class LoginPage extends BasePage {
 
     public void loginAs(String login, String password) {
         LOGGER.info("Enter credentials: " + login + " / " + password);
-        waitForPageLoaded();
+        JavaScriptUtil.highlightElement(loginField);
         loginField.sendKeys(login);
+
+        JavaScriptUtil.highlightElement(passwordField);
         passwordField.sendKeys(password);
+
+        JavaScriptUtil.unHighlightElements(loginField, passwordField);
         submitButton.click();
     }
 
     public String getPageUrl(){
         scrollDownABit();
-       return JavaScriptUtil.getPageUrl(webDriver);
+       return JavaScriptUtil.getPageUrl();
     }
 
     public void scrollDownABit(){
-         JavaScriptUtil.scrollDownPage(webDriver,0,10);
+         JavaScriptUtil.scrollDownPage(0,10);
     }
 
     @Override
     public void waitForPageLoaded() {
-        LOGGER.info("Wait for main page loaded...");
+        LOGGER.info("Wait for Login/Main page loaded...");
         waitForElementVisible(loginField);
         waitForElementVisible(passwordField);
         waitForElementVisible(submitButton);

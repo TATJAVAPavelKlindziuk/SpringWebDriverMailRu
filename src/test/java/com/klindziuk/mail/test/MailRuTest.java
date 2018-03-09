@@ -34,13 +34,13 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 	@EnableWebDriver
 	public void setUp() {
 		WebDriver webDriver = BrowserDriver.getDriver();
-		webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		webDriver.navigate().to(MailConstant.MAIL_URL);
-		loginPage = new LoginPage(webDriver);
-		servicePage = new ServicePage(webDriver);
-		writeMailPage = new WriteMailPage(webDriver);
-		draftsPage = new DraftsPage(webDriver);
-		sentPage = new SentPage(webDriver);
+		loginPage = new LoginPage();
+		servicePage = new ServicePage();
+		writeMailPage = new WriteMailPage();
+		draftsPage = new DraftsPage();
+		sentPage = new SentPage();
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 		softAssert.assertTrue(draftsPage.isDraftContainerVisible());
 
 		// Step 6 : Verify the draft content (addressee, subject and body – should be the same as in Step 3)
-		softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstant.NO_RECIPIENT,
+		softAssert.assertEquals(draftsPage.getMail(firstElementIndex), MailConstant.RECIPIENT,
 				String.format("Email '%s ' should be equal to '%s'", draftsPage.getMail(firstElementIndex),
 						MailConstant.NO_RECIPIENT));
 		softAssert.assertEquals(draftsPage.getMessage(firstElementIndex), MailConstant.TEXT,
@@ -84,25 +84,24 @@ public class MailRuTest extends AbstractTestNGSpringContextTests {
 
 		// Step 8 : Verify, that the mail not disappeared from ‘Drafts’ folder.
 		writeMailPage.folder().openDraftTab();
-		softAssert.assertTrue(draftsPage.isDraftContainerVisible(), "Draft container is visible");
-		softAssert.assertTrue(draftsPage.isMailsPresent(), "Mail is present in drafts after send");
-		softAssert.assertTrue(draftsPage.isMessagesPresent(), "Mail is present in drafts after send");
+		softAssert.assertFalse(draftsPage.isDraftContainerVisible(), "Draft container is visible");
+		softAssert.assertFalse(draftsPage.isMailsPresent(), "Mail is present in drafts after send");
+		softAssert.assertFalse(draftsPage.isMessagesPresent(), "Mail is present in drafts after send");
 
 		// Step 9 : Log off
 		sentPage.header().LogOut();
 
 		// Step 10 : Verify that log off is successful
 		checkLoginPage(softAssert);
-		Assert.assertFalse(true);
 		softAssert.assertAll();
 
 	}
 
 	private void checkLoginPage(SoftAssert softAssert) {
 		loginPage.waitForPageLoaded();
-		softAssert.assertTrue(loginPage.isLoginFieldVisible());
-		softAssert.assertTrue(loginPage.isPasswordFieldVisible());
-		softAssert.assertTrue(loginPage.isSubmitButtonVisible());
+		softAssert.assertTrue(loginPage.isLoginFieldVisible(), "Login field is not visible");
+		softAssert.assertTrue(loginPage.isPasswordFieldVisible(), "Password field is not visible");
+		softAssert.assertTrue(loginPage.isSubmitButtonVisible(), "Submit button is not visible");
 		softAssert.assertAll();
 	}
 

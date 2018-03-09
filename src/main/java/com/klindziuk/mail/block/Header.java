@@ -1,5 +1,6 @@
 package com.klindziuk.mail.block;
 
+import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,9 +20,9 @@ public class Header {
         this.webDriver = webDriver;
     }
 
-    public void LogOut()
-    {
+    public void LogOut() {
         LOGGER.info("Logging out...");
+        JavaScriptUtil.highlightElement(exitButton);
         exitButton.click();
     }
 }

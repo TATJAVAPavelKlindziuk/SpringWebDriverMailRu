@@ -2,8 +2,8 @@ package com.klindziuk.mail.pageobject;
 
 import com.klindziuk.mail.block.Folder;
 import com.klindziuk.mail.block.Header;
+import com.klindziuk.mail.util.JavaScriptUtil;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -19,8 +19,7 @@ public class ServicePage extends BasePage {
     @FindBy(xpath = "//div[@class= 'b-toolbar__item']//a[@data-name = 'compose']")
     private WebElement writeMailButton;
 
-    public ServicePage(WebDriver webDriver) {
-        super(webDriver);
+    public ServicePage() {
         PageFactory.initElements(this.webDriver, this);
         header = PageFactory.initElements(webDriver, Header.class);
         folder = PageFactory.initElements(webDriver, Folder.class);
@@ -34,9 +33,9 @@ public class ServicePage extends BasePage {
         return folder;
     }
 
-    public void openNewMail()
-    {
+    public void openNewMail() {
         LOGGER.info("Composing new mail...");
+        JavaScriptUtil.highlightElement(writeMailButton);
         writeMailButton.click();
     }
 
